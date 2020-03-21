@@ -1,0 +1,44 @@
+<head>
+    <meta>
+    <title>VANET REALTIME DATABASE ></title>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-database.js"></script>
+</head>
+
+<body>
+    <!--value -->
+    <pre id="node1">
+           </pre>
+    <!--Child -->
+
+
+    <script>
+        window.onload = function() {
+            // Initialization Firebase
+                var firebaseConfig = {
+    apiKey: "AIzaSyDUz09wQnXGNgckcK6uBQ7GsjYvYA8RLR8",
+    authDomain: "der-corona-check.firebaseapp.com",
+    databaseURL: "https://der-corona-check.firebaseio.com",
+    projectId: "der-corona-check",
+    storageBucket: "der-corona-check.appspot.com",
+    messagingSenderId: "922679667313",
+    appId: "1:922679667313:web:373b1ca5c65b4d120449d0",
+    measurementId: "G-91CKELC9TG"
+  };
+
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            //get elements
+            const preObject = document.getElementById('/');
+            //create referencees
+            const dbRefObject = firebase.database().ref();
+
+            //sync object changes
+            dbRefObject.once('value').then(function(snapshot) {
+                console.log(snapshot.val());
+                //display on pre tag 
+                //preObject.innerHTML = snapshot.val();
+            });
+        }
+    </script>
+</body>

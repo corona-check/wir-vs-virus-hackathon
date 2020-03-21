@@ -25,17 +25,47 @@
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
+
+
+   // Get a reference to the database service
+   var database = firebase.database();
 </script>
 
 </head>
 <body> 
-Hi this is the test.
+Hi this is the test.....
 
 
-<!-- Previously loaded Firebase SDKs -->
 
-  <!-- Initialize Firebase -->
-  <script src="/__/firebase/init.js"></script>
+
+<script>
+
+public static class Post {
+  public String author;
+  public String title;
+  public Post(String author, String title) {
+    // ...
+  }
+}
+// Get a reference to our posts
+final FirebaseDatabase database = FirebaseDatabase.getInstance();
+DatabaseReference ref = database.getReference("server/saving-data/fireblog/posts");
+// Attach a listener to read the data at our posts reference
+ref.addValueEventListener(new ValueEventListener() {
+  @Override
+  public void onDataChange(DataSnapshot dataSnapshot) {
+    Post post = dataSnapshot.getValue(Post.class);
+    System.out.println(post);
+  }
+  @Override
+  public void onCancelled(DatabaseError databaseError) {
+    System.out.println("The read failed: " + databaseError.getCode());
+  }
+});
+
+
+</script>
+
 
   
 </body>
