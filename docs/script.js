@@ -47,7 +47,6 @@ updateEvent ();
  function updateData (evt) {
   var name = document.getElementById('name');
   var id = document.getElementById('id');
-  // TODO 驗證格式
   
   ref.push().update({ 
     name: name.value,
