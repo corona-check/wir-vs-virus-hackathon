@@ -1,0 +1,55 @@
+<html>
+  <head>
+  <style>
+body {
+  font-family: "Benton Sans", "Helvetica Neue", helvetica, arial, sans-serif;
+  margin: 2em;
+}
+
+h1 {
+  font-style: italic;
+  color: #373fff;
+}
+
+#orders{
+ border:2px solid black; 
+}
+th{
+ border: 1px solid black;
+  border-left:none;
+  border-right:none;
+}
+
+
+</style>
+    <meta charset="utf-8"/>
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-database.js"></script>
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-analytics.js"></script>
+    <title>Firebase example</title>
+  </head>
+  <body>
+      <h1>Carona Data Search</h1>
+  <form action="">
+
+  id:    
+  <input type="text" id="id" />
+  <br />
+  <button type="button" onclick="searchData()">
+    submit
+  </button>
+</form>
+
+
+    <pre id='data'></pre>
+	<table id ="orders" style ="width:50%">
+
+      
+    </table>
+    <script src="search.js"></script>
+  </body>
+</html>
