@@ -27,16 +27,16 @@ ref.once('value').then(function (snap) {
     //data.innerHTML = test3
 	var content = '';
 					content +='<tr>';
-                content += '<th>' + 'Name' + '</th>';
                 content += '<th>' + 'Id' + '</th>';
+                content += '<th>' + 'Result' + '</th>';
 
                 content += '</tr>';
 	 testSnap.forEach(function(data){
                 var val = data.val();
 				if(val.id == id.value){
                 content +='<tr>';
-                content += '<td>' + val.name + '</td>';
                 content += '<td>' + val.id + '</td>';
+                content += '<td>' + val.name + '</td>';
 
                 content += '</tr>';
 				}
