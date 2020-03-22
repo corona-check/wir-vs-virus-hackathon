@@ -1,0 +1,188 @@
+<html>
+  <head>
+  </head>
+
+  <body>
+
+
+<script>
+
+
+$(document).ready(function() {
+  var time = new Date().getTime().toString().substr(-8),
+     myName = 'visitor' + time,
+     messagesRef = new Firebase("https://blueprint2015.firebaseio.com/"),
+     listRef = new Firebase("https://blueprint2015.firebaseio.com/presence/"),
+     userRef = listRef.push();
+
+
+// Add ourselves to presence list when online.
+var presenceRef = new Firebase("https://blueprint2015.firebaseio.com/.info/connected");
+presenceRef.on("value", function(snap) {
+  if (snap.val()) {
+    userRef.set(true);
+    messagesRef.push({
+      name: myName,
+      text: 'joined the fun.'
+    });
+    // Remove ourselves when we disconnect.
+    userRef.onDisconnect().remove();
+    
+  }
+});
+
+// Number of online users is the number of objects in the presence list.
+listRef.on("value", function(snap) {
+  $('#users').html(snap.numChildren() + ' users are currently viewing this codepen');
+});  
+
+  $('#signup-form').submit(function(e) {
+    e.preventDefault();
+    var email = $('#email').val(),
+      name = $('#name').val();
+
+    messagesRef.push({
+        name: myName,
+        text: 'submitted the sign up form with name "' + name +  '" and email "' + email + '"'
+      });
+  });
+
+  $('input').click(function() {
+    if (myName) {
+      var inputName = $(this).attr('id') || $(this).attr('type');
+
+      messagesRef.push({
+        name: myName,
+        text: 'clicked the ' + inputName + ' field'
+      });
+    };
+  });
+
+  $('img').click(function() {
+    if (myName) {
+
+      messagesRef.push({
+        name: myName,
+        text: 'clicked ' + $(this).attr('id')
+      });
+    };
+  });
+
+  // Add a callback that is triggered for each chat message.
+  messagesRef.limitToLast(5).on("child_added", function (snapshot) {
+    var message = snapshot.val();
+    $("<div/>").text(message.text).prepend($("<em/>")
+      .text(message.name + " ")).appendTo($("#messagesDiv"));
+    $("#messagesDiv")[0].scrollTop = $("#messagesDiv")[0].scrollHeight;
+    messagesRef.limitToLast(7);
+  });
+});
+
+
+</script>
+
+    <p id="users"></p>
+    <form id="signup-form">
+      <div class="form-item">
+        <label>Name</label>
+        <input type="text" placeholder="Name" id="name">
+      </div>
+      <div class="form-item">
+        <label>Email</label>
+        <input type="email" placeholder="Email" id="email">
+      </div>
+      <input type="submit" value="submit">
+    </form>
+    <img src="http://www.blueprintinteractive.com/sites/default/files/images/cookie-monster-300.jpg" id="cookiemonster">
+    <img src="https://www.supanova.com.au/wp-content/uploads/2013/11/Chewbacca-face.jpg" id="chewbacca">
+
+    <div id="messagesDiv"></div>
+
+
+<style>
+
+/* Global */
+body {
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 500px;
+  background-color: #f8f8f8;
+  font-size: 24px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #424547;
+  text-align: center;
+}
+
+h1 {
+  font-size: 36px;
+  font-weight: bold;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #424547;
+}
+
+h3 {
+  font-size: 24px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #424547;
+}
+
+p {
+ font-size: 16px;
+}
+
+input {
+  font-size: 24px;
+}
+
+input[type=text] {
+  color: #424547;
+  border: 1px solid #c2c2c2;
+  background-color: white;
+}
+
+em {
+  font-style: normal;
+  font-weight: bold;
+  color: black;
+}
+
+
+/* Chat */
+#messagesDiv {
+  background-color: white;
+  overflow: auto;
+  height: 230px;
+  width: 100%;
+  padding: 10px;
+  border: 8px solid #424547;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+#nameInput {
+  width: 26%;
+}
+
+#messageInput {
+  width: 68%;
+}
+
+#cookiemonster {
+  float: left;
+  display: block;
+  width: 100px;
+  height: auto;
+}
+
+#chewbacca {
+  float: right;
+  width: 51px;
+  height: auto;
+}
+
+
+</style>
+
+  </body>
+</html>

@@ -5,6 +5,7 @@
 
 <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-database.js"></script>
 
 <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
@@ -29,6 +30,12 @@
 
    // Get a reference to the database service
    var database = firebase.database();
+
+
+console.log(firebase.database().ref('/1/'));
+
+
+
 </script>
 
 </head>
@@ -39,33 +46,17 @@ Hi this is the test.....
 
 
 <script>
-
-public static class Post {
-  public String author;
-  public String title;
-  public Post(String author, String title) {
-    // ...
-  }
+function writeUserData(userId, name, email, imageUrl) {
+  firebase.database().ref('users/' + userId).set({
+    username: 'Cla',
+    email: 'email',
+    profile_picture : 'imageUrl'
+  });
 }
-// Get a reference to our posts
-final FirebaseDatabase database = FirebaseDatabase.getInstance();
-DatabaseReference ref = database.getReference("server/saving-data/fireblog/posts");
-// Attach a listener to read the data at our posts reference
-ref.addValueEventListener(new ValueEventListener() {
-  @Override
-  public void onDataChange(DataSnapshot dataSnapshot) {
-    Post post = dataSnapshot.getValue(Post.class);
-    System.out.println(post);
-  }
-  @Override
-  public void onCancelled(DatabaseError databaseError) {
-    System.out.println("The read failed: " + databaseError.getCode());
-  }
-});
-
+//alert('done');
 
 </script>
 
-
   
 </body>
+</html>
